@@ -1,42 +1,43 @@
-import { mongoose } from "mongoose";
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
-const Schema = mongoose.Schema;
 
-const medicoSchema = new Schema({
- 
+
+const MedicoSchema = new mongoose.Schema({
   nome: {
     type: String,
-    required: [true, "Campo obrigatório."],
+    required: true,
   },
-
   login: {
     type: String,
-    required: [true, "Campo obrigatório."],
+    required: true,
     unique: true,
   },
-
   senha: {
     type: String,
-    required: [true, "Campo obrigatório."]
+    required: true,
   },
-  
   crm: {
-     type: String,
-     required: [true, "Campo obrigatório."],
-     unique: true
+    type: String,
+    required: true,
+    unique: true,
   },
-
   especialidade: {
-     type: String,
-     required: [true, "Campo obrigatório."]
-  },
-
+    type: String,
+    required: true,
+  },  
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-const medico = mongoose.model("Medico", medicoSchema);
+// Aqui é feita a criptografia da senha
+MedicoSchema.pre('save', async function (next) {
+  this.senha = await bcrypt.hash(this.senha, 10);
+  next();
+})
 
-export default medico;
+const Medico = mongoose.model('Medico', MedicoSchema);
+
+export default Medico;
