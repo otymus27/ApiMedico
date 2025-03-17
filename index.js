@@ -15,6 +15,7 @@ dotenv.config();
 
 
 import cors from "cors";//compartilhamento de recursos diferentes entre o frontend com backend !!!muito importante!!!
+import router from './routes/medicos.route.js';
 
 
 // Chamar a função express
@@ -26,6 +27,7 @@ app.use(cors());//usamos aqui para liberar segurança da aplicação
 
 
 // Usando as rotas
+app.use("/",router)
 app.use("/medico", medicoRoute);
 app.use("/login", loginRoute);
 
