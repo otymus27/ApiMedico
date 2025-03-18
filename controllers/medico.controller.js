@@ -1,5 +1,5 @@
 // Importar módulo responsável pela comunicação com o banco de dados
-import MedicoService from "../services/MedicoService.js";
+import MedicoService from "../services/ServicesMedicos.js";
 
 // Função para cadastrar registros
 const create = async (req, res) => {
@@ -31,8 +31,8 @@ const create = async (req, res) => {
       },
       message: "Registro criado com sucesso!",
     });
-  } catch (error) {
-    res.status(500).send({ message: error.message });
+  } catch (error) {    
+    return res.status(500).send("Erro no controller: "+error.message);
   }
 };
 
@@ -49,7 +49,7 @@ const listar = async (req, res) => {
     // Resposta para o cliente
     res.status(200).send(medicos);
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    return res.status(500).send("Erro no controller: "+error.message);
   }
 };
 
@@ -65,7 +65,7 @@ const buscarPorId = async (req, res) => {
     // Resposta para o cliente
     res.status(200).send(medico);
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    return res.status(500).send("Erro no controller: "+error.message);
   }
 };
 
@@ -89,7 +89,7 @@ const excluir = async (req, res) => {
     // Resposta para o cliente
     res.status(200).send({ message: "Registro excluido com sucesso!" });
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    return res.status(500).send("Erro no controller excluir: "+error.message);
   }
 };
 
@@ -111,7 +111,7 @@ const editar = async (req, res) => {
     // Resposta para o cliente
     res.status(200).send({ message: "Registro atualizado com sucesso!" });
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    return res.status(500).send("Erro no controller: "+error.message);
   }
 };
 

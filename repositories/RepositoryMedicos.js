@@ -1,4 +1,4 @@
-import Medico from "../models/Medicos";
+import Medico from "../models/Medicos.js";
 
 const create = (nome, login, senha, crm, especialidade) => Medico.create({nome, login, senha, crm, especialidade});
 

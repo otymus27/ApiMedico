@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import medicoService from '../services/MedicoService.js';
+import medicoService from '../services/ServicesMedicos.js';
 
 
 

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import medicoService from "../services/MedicoService.js";
+import medicoService from '../services/ServicesMedicos.js';
 
 
 
