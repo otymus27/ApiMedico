@@ -12,7 +12,7 @@ router.post("/", medicoControle.create);
 router.get("/", medicoControle.listar);
 
 // Rota para buscar registros por id
-router.get("/:id",autenticacao, validId, validUser, medicoControle.buscarPorId);
+router.get("/:id",autenticacao, validId, medicoControle.buscarPorId);
 
 // Rota para excluir registro por id
 router.delete("/:id", medicoControle.excluir);

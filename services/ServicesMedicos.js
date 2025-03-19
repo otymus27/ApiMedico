@@ -92,6 +92,9 @@ const editar = async (id, nome, login, senha, crm, especialidade) => {
 
   // if (noticias.user.id != userId)
   //   throw new Error("Você não tem permissão para editar este registro!");
+  if (senha) {
+    senha = await bcrypt.hash(senha, 10);
+  }
 
   // Aqui chamamos o service para atualizar o registro no banco de dados, passando o id e os dados
   await medicoRepository.editar(id, nome, login, senha, crm, especialidade);
