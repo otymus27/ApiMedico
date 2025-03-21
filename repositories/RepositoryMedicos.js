@@ -6,7 +6,7 @@ const listar = () => Medico.find();
 
 const buscarPorId = (id) => Medico.findById(id);
 
-const buscarPorLogin = (login) => Medico.findOne({ login: login });
+const buscarPorLogin = (login,crm) => Medico.findOne({ login: login, crm: crm });
 
 const excluir = (id) => Medico.findByIdAndDelete(id);
 

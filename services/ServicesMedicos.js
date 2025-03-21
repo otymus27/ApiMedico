@@ -10,7 +10,7 @@ const create = async ({ nome, login, senha, crm, especialidade }) => {
     throw new Error("Preencha todos os campos!");
 
   // Aqui fazemos verificação se já existe registro com esse nome
-  const buscar = await medicoRepository.buscarPorLogin(login);
+  const buscar = await medicoRepository.buscarPorLogin(login,crm);
 
   if (buscar) throw new Error("Login já cadastrado!");
 
@@ -28,7 +28,7 @@ const create = async ({ nome, login, senha, crm, especialidade }) => {
   // Aqui criamos o token
   const token = loginService.generateToken(registro.id);
 
-  // Resposta o objeto para o cliente, vamos enviar apenas o token, como boa prática não vamos enviar os dados do usuario
+  // Retorna o objeto para o cliente, vamos enviar apenas o token, como boa prática não vamos enviar os dados do usuario
   return token;
   
 };

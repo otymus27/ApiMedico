@@ -11,8 +11,8 @@ const login = async (req, res) => {
           const token = await loginService.autenticar({login, senha});
 
           // Aqui estou enviando o token como resposta
-          //return res.send(token);       
-          return res.send({token, login});      
+          return res.send(token);       
+           
      } catch (error) {
           return res.status(401).send("Erro no controller de login: "+error.message);
      }

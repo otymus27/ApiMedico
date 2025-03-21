@@ -32,7 +32,15 @@ const create = async (req, res) => {
       message: "Registro criado com sucesso!",
     });
   } catch (error) {    
-    return res.status(500).send("Erro no controller: "+error.message);
+    console.error("Erro no controller -  ao cadastrar médico:", error.message);
+
+        // Verificar se o erro é de campo único duplicado (MongoDB)
+        if (error.code === 11000) {
+            const campoDuplicado = Object.keys(error.keyValue)[0];
+            return res.status(400).json({ mensagem: `O campo "${campoDuplicado}" já está em uso.` });
+        }
+
+        res.status(500).json({ mensagem: "Erro interno no servidor." });
   }
 };
 
