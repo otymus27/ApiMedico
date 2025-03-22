@@ -8,28 +8,32 @@ const create = async ({ nome, login, senha, crm, especialidade }) => {
   // Validar dados 
   if (!nome || !login || !senha || !crm || !especialidade)
     throw new Error("Preencha todos os campos!");
+ 
+  try {
+    // Aqui chamamos o repositorio para cadastrar o registro no banco de dados
+    return await medicoRepository.create(
+      nome,
+      login,    
+      senha,
+      crm,
+      especialidade,   
+    );
 
-  // Aqui fazemos verificação se já existe registro com esse nome
-  const buscar = await medicoRepository.buscarPorLogin(login,crm);
+    // Aqui criamos o token
+    const token = loginService.generateToken(registro.id);
 
-  if (buscar) throw new Error("Login já cadastrado!");
-
-  // Aqui chamamos o service para cadastrar o registro no banco de dados
-  const registro = await medicoRepository.create(
-    nome,
-    login,    
-    senha,
-    crm,
-    especialidade,   
-  );
-
-  if (!registro) throw new Error("Erro ao criar registro!");
-
-  // Aqui criamos o token
-  const token = loginService.generateToken(registro.id);
-
-  // Retorna o objeto para o cliente, vamos enviar apenas o token, como boa prática não vamos enviar os dados do usuario
-  return token;
+    // Retorna o objeto para o cliente, vamos enviar apenas o token, como boa prática não vamos enviar os dados do usuario
+    return token;
+    
+  } catch (error) {
+    if (error.code === 11000) { // Código de erro de chave duplicada no MongoDB
+        const campoDuplicado = Object.keys(error.keyPattern)[0];
+        const erro = new Error(`O campo '${campoDuplicado}' já está em uso.`);
+        erro.status = 409; // Código de conflito
+        throw erro;
+    }
+    throw new Error("Erro ao cadastrar registro.");    
+  }   
   
 };
 
@@ -86,7 +90,7 @@ const editar = async (id, nome, login, senha, crm, especialidade) => {
   // Validar dados
   if (!nome && !login && !senha && !crm && !especialidade)
     throw new Error("Preencha pelo menos um dos campos!");
-
+  
   // Aqui chamamos o repositorio para buscarPorId o registro no banco de dados, passando o id
   const registro = await medicoRepository.buscarPorId(id);
 
@@ -99,5 +103,6 @@ const editar = async (id, nome, login, senha, crm, especialidade) => {
   // Aqui chamamos o service para atualizar o registro no banco de dados, passando o id e os dados
   await medicoRepository.editar(id, nome, login, senha, crm, especialidade);
 };
+
 
 export default { create, listar, buscarPorId, excluir, editar };
