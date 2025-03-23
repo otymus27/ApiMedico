@@ -96,24 +96,25 @@ const excluir = async (req, res) => {
 
 // Função para editar registros
 const editar = async (req, res) => {
-  try {
-    //Receber os dados de um formulário e desmembrar os dados
-    const { nome, login, senha, crm, especialidade } = req.body;
+    try {
+        //Receber os dados de um formulário e desmembrar os dados
+        const { nome, login, senha, crm, especialidade } = req.body;
 
-    // Aqui passamos o parâmetro para rota
-    const id = req.params.id;
+        // Aqui passamos o parâmetro para rota
+        const id = req.params.id;
 
-    // Aqui chamamos o service para buscarPorId o registro no banco de dados, passando o id
-    const medico = await MedicoService.buscarPorId(id);
+        // Aqui chamamos o service para buscarPorId o registro no banco de dados, passando o id
+        const medico = await MedicoService.buscarPorId(id);
 
-    // Aqui chamamos o service para atualizar o registro no banco de dados, passando o id e os dados
-    await MedicoService.editar(id, nome, login, senha, crm, especialidade);
+        // Aqui chamamos o service para atualizar o registro no banco de dados, passando o id e os dados
+        await MedicoService.editar(id, nome, login, senha, crm, especialidade);
 
-    // Resposta para o cliente
-    res.status(200).send({ message: "Registro atualizado com sucesso!" });
-  } catch (error) {
-    return res.status(500).send("Erro no controller: "+error.message);
-  }
+        // Resposta para o cliente
+        res.status(200).send({ message: "Registro atualizado com sucesso!" });
+    } catch (error) {
+        console.error("Erro no Controller:", error.message); // Verificar no console do backend
+        res.status(error.status || 500).json({ message: error.message });
+    }
 };
 
 export default { create, listar, buscarPorId, excluir, editar };

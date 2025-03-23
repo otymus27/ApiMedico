@@ -100,8 +100,27 @@ const editar = async (id, nome, login, senha, crm, especialidade) => {
     senha = await bcrypt.hash(senha, 10);
   }
 
-  // Aqui chamamos o service para atualizar o registro no banco de dados, passando o id e os dados
-  await medicoRepository.editar(id, nome, login, senha, crm, especialidade);
+
+
+  try {    
+      // Aqui chamamos o service para atualizar o registro no banco de dados, passando o id e os dados
+      const registroAtualizado = await medicoRepository.editar(id, nome, login, senha, crm, especialidade);
+      if(!registroAtualizado){
+          const error = new Error("Regiistro não encontrado!");
+          error.status = 404;
+          throw error;
+      }
+  } catch (error) {
+      if (error.code === 11000) { // Código de erro de chave duplicada no MongoDB
+          const campoDuplicado = Object.keys(error.keyPattern)[0];
+          const erro = new Error(`O campo '${campoDuplicado}' já está em uso.`);
+          erro.status = 409; // Código de conflito
+          throw erro;
+      }
+      throw new Error(error.message || "Erro ao atualizar registro."); 
+  }
+
+  
 };
 
 
