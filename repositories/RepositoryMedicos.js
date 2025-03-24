@@ -4,6 +4,19 @@ const create = (nome, login, senha, crm, especialidade) => Medico.create({nome, 
 
 const listar = () => Medico.find();
 
+
+const listarPaginado = async (page = 1, limit=5) => {
+    const skip = (page - 1) * limit;
+    try {
+        const medicos = await Medico.find().skip(skip).limit(limit);
+        const total = await Medico.countDocuments();
+        return { medicos, total };
+    } catch (error) {
+        throw new Error("Erro ao acessar o banco de dados.");
+    }
+}
+
+
 const buscarPorId = (id) => Medico.findById(id);
 
 //const buscarPorLogin = (login,crm) => Medico.findOne({ login: login, crm: crm });
@@ -26,4 +39,5 @@ export default {
   editar,
   excluir,  
   buscarPorLogin,
+  listarPaginado,
 };

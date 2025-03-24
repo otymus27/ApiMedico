@@ -48,6 +48,24 @@ const listar = async (req, res) => {
   return registros;
 };
 
+
+const listarMedicosPaginados = async (page = 1, limit = 10) => {
+  try {
+      const { medicos, total } = await medicoRepository.listarPaginado(page, limit);
+      return {
+          medicos,
+          total,
+          page: Number(page),
+          limit: Number(limit),
+      };
+  } catch (error) {
+      throw new Error("Erro ao processar os dados no serviço.");
+  }
+};
+
+
+
+
 // Função para buscar registros por ID
 const buscarPorId = async (id) => {
   // Aqui chamamos o repositorio para buscarPorId o registro no banco de dados, passando o id e armazenamos numa variavel
@@ -124,4 +142,7 @@ const editar = async (id, nome, login, senha, crm, especialidade) => {
 };
 
 
-export default { create, listar, buscarPorId, excluir, editar };
+
+
+
+export default { create, listar, buscarPorId, excluir, editar,listarMedicosPaginados };

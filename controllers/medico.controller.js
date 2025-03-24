@@ -39,19 +39,22 @@ const create = async (req, res) => {
 
 // Função para leitura de registros
 const listar = async (req, res) => {
-  try {
-    // Variável para receber um conjunto de registros ou array
-    const medicos = await MedicoService.listar();
+    try {      
+        const { page = 1, limit = 10 } = req.query;
+        
+        // Variável para receber um conjunto de registros ou array
+        const medicos = await MedicoService.listarMedicosPaginados(page, limit);
+        
 
-    if (medicos.length === 0) {
-      return res.status(400).send({ message: "Nenhum registro cadastrado!" });
+        if (medicos.length === 0) {
+          return res.status(400).send({ message: "Nenhum registro cadastrado!" });
+        }
+
+        // Resposta para o cliente
+        res.status(200).send(medicos);
+    } catch (error) {
+        return res.status(500).send("Erro no controller: "+error.message);
     }
-
-    // Resposta para o cliente
-    res.status(200).send(medicos);
-  } catch (error) {
-    return res.status(500).send("Erro no controller: "+error.message);
-  }
 };
 
 // Função para buscar registros por ID
