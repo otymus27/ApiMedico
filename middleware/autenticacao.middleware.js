@@ -56,7 +56,7 @@ function verificarToken(req, res, next) {
 
               return next();
           } catch (dberror) {
-              return res.status(500).json({ error: "Erro ao buscar usuário no banco de dados." });
+              return res.status(500).json({ error: "Erro no middleware - Erro ao buscar usuário no banco de dados." });
           }
           
       });

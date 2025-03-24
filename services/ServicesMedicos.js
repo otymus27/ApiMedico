@@ -118,8 +118,6 @@ const editar = async (id, nome, login, senha, crm, especialidade) => {
     senha = await bcrypt.hash(senha, 10);
   }
 
-
-
   try {    
       // Aqui chamamos o service para atualizar o registro no banco de dados, passando o id e os dados
       const registroAtualizado = await medicoRepository.editar(id, nome, login, senha, crm, especialidade);

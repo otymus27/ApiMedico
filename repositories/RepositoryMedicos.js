@@ -19,8 +19,6 @@ const listarPaginado = async (page = 1, limit=5) => {
 
 const buscarPorId = (id) => Medico.findById(id);
 
-//const buscarPorLogin = (login,crm) => Medico.findOne({ login: login, crm: crm });
-
 const buscarPorLogin = (login) => Medico.findOne({ login: login });
 
 const excluir = (id) => Medico.findByIdAndDelete(id);

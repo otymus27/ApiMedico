@@ -1,23 +1,23 @@
 import express from 'express';
-import medicoControle from '../controllers/medico.controller.js';
+import pacienteControle from '../controllers/paciente.controller.js';
 import { validId, validUser } from '../middleware/global.middleware.js';
 import autenticacao from '../middleware/autenticacao.middleware.js';
 
 const router = express.Router();
 
 // Rota para criar registro
-router.post("/", medicoControle.create);
+router.post("/", pacienteControle.create);
 
 // Rota para listar registros
-router.get("/", medicoControle.listar);
+router.get("/", pacienteControle.listar);
 
 // Rota para buscar registros por id
-router.get("/:id", validId, medicoControle.buscarPorId);
+router.get("/:id", validId, pacienteControle.buscarPorId);
 
 // Rota para excluir registro por id
-router.delete("/:id", medicoControle.excluir);
+router.delete("/:id", validId, pacienteControle.excluir);
 
 // Rota para atualizar um registro por id
-router.patch("/:id", validId, validUser, medicoControle.editar);
+router.patch("/:id", validId, pacienteControle.editar);
 
 export default router;
