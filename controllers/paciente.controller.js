@@ -41,7 +41,7 @@ const listar = async (req, res) => {
         const { page = 1, limit = 10 } = req.query;
         
         // Variável para receber um conjunto de registros ou array
-        const pacientes = await PacienteService.listar(page, limit);
+        const pacientes = await PacienteService.listarPaginado(page, limit);
         
 
         if (pacientes.length === 0) {

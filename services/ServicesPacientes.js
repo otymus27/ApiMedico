@@ -39,7 +39,7 @@ const listar = async (req, res) => {
   return registros;
 };
 
-const listarPaginado = async (page = 1, limit = 10) => {
+const listarPaginado = async (page = 1, limit = 5) => {
   try {
       const { pacientes, total } = await pacienteRepository.listarPaginado(page, limit);
       return {

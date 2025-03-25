@@ -8,7 +8,7 @@ const listarPaginado = async (page = 1, limit=5) => {
     const skip = (page - 1) * limit;
     try {
         const pacientes = await Paciente.find().skip(skip).limit(limit);
-        const total = await Medico.countDocuments();
+        const total = await Paciente.countDocuments();
         return { pacientes, total };
     } catch (error) {
         throw new Error("Erro ao acessar o banco de dados.");
