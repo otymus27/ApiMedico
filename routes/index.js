@@ -1,6 +1,7 @@
 import { Router } from "express";
 import medicoRouter from "./medicos.route.js";
 import pacienteRouter from "./pacientes.route.js";
+import consultaRouter from "./consultas.route.js";
 import swaggerRouter from "./swagger.route.js";
 import loginRouter from "./login.route.js";
 
@@ -10,6 +11,7 @@ const router = Router();
 router.use("/medicos", medicoRouter);
 router.use("/login", loginRouter);
 router.use("/pacientes", pacienteRouter);
+router.use("/consultas", consultaRouter);
 router.use("/doc", swaggerRouter);
 
 export default router;
