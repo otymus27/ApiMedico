@@ -8,8 +8,6 @@ const create = async ({ data, medicoId, pacienteId }) => {
      if  (!data ||!medicoId || !pacienteId ) {
           throw new Error('Todos os campos são obrigatórios');
      } 
-
-    
      
      // Aqui chamamos o repositorio para cadastrar o registro no banco de dados
      return await consultaRepository.create( data, medicoId, pacienteId );  
